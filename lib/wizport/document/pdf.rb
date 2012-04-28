@@ -9,7 +9,6 @@ module Wizport
       def initialize
         @pdf = Prawn::Document.new
         @pdf.font "#{Prawn::BASEDIR}/data/fonts/gkai00mp.ttf"
-
       end
 
       def text(txt)

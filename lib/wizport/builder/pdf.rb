@@ -15,6 +15,14 @@ module Wizport
         @pdf.text @rpt.title
       end
 
+      def grid
+        tbl = []
+        tbl << @rpt.columns.map {|c| c.title }
+        @rpt.source.all.each do |obj|
+          tbl << @rpt.columns.map {|c| obj.send(c.name)}
+        end
+      end
+
       def section(section)
         @tbl = []
         @rpt.source.groups(section).each do |group|
@@ -32,9 +40,9 @@ module Wizport
       def section_body(section,group)
         rows = []
         rows << @rpt.columns.map {|c| c.title }
-        rs = @rpt.source.filter({section.group => group})
-        rs.each do |r|
-          rows << @rpt.columns.map {|c| r.send(c.name)}
+        objs = @rpt.source.filter({section.group => group})
+        objs.each do |obj|
+          rows << @rpt.columns.map {|c| obj.send(c.name)}
         end
         @tbl << [@pdf.make_table(rows)]
       end

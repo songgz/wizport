@@ -18,10 +18,8 @@ module Wizport
       @source.where(options)
     end
 
-    def each(&block)
-      @source.each(&block)
+    def all
+      @source
     end
-
-
   end
 end
