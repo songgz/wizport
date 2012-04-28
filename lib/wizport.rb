@@ -2,11 +2,11 @@ require "prawn"
 
 require "wizport/version"
 
-require "wizport/builder/pdf_builder"
+require "wizport/document/pdf"
 
-require "wizport/engine/text"
-require "wizport/engine/table"
-require "wizport/engine/documentor"
+require "wizport/builder/pdf"
+
+require "wizport/engine/mongoid_source"
 require "wizport/engine/column"
 require "wizport/engine/section"
 require "wizport/engine/report"
