@@ -25,12 +25,12 @@ end
 describe Wizport::Report do
 
   it "a simple example of report" do
-    rpt = Wizport::Report.new({:title => "人员性别统计表",:source => Person.all})
+    rpt = Wizport::Report.new(:title => "人员性别统计表",:source => Person.all)
     rpt.column({:title => "姓名",:name => :name})
     rpt.column({:title => "性别",:name => :sex})
     rpt.column({:title => "电话",:name => :tel})
     rpt.section({:title => "性别",:group => :sex})
-    rpt.save('c:/rpt.pdf')
+    rpt.save('c:/rpt.rtf')
   end
 
 end

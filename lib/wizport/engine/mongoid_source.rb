@@ -15,7 +15,7 @@ module Wizport
     end
 
     def filter(options)
-      @source.where(options)
+      options.blank? ? @source : @source.where(options)
     end
 
     def all

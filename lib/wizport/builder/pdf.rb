@@ -21,6 +21,7 @@ module Wizport
         @rpt.source.all.each do |obj|
           tbl << @rpt.columns.map {|c| obj.send(c.name)}
         end
+        @pdf.table tbl
       end
 
       def section(section)
