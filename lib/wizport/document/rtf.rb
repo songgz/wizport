@@ -19,11 +19,12 @@ module Wizport
         r = rows.length
         c = rows.first && rows.first.length
         tbl = @rtf.table r, c
-        rows.each_index do |row|
-          rows[row].each_index do |col|
-            tbl[row][col] << rows[row][col].to_s
-          end
-        end
+        tbl[0][2] << "sss"
+        #rows.each_index do |row|
+        #  rows[row].each_index do |col|
+        #    tbl[row][col] << rows[row][col].to_s
+        #  end
+        #end
         tbl
       end
 

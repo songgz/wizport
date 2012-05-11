@@ -3,11 +3,12 @@
 # Wizport: A gem for creating reports by specifying columns, groups, styles, etc.
 # Copyright 2012 by sgzhe@163.com
 
+require "stringio"
 module Wizport
   module Rtf
     class Section
-      def initialize(parent = nil)
-        @parent = parent || []
+      def initialize(io = nil)
+        @io = io || StringIO.new
       end
 
       def sc(command, param = nil, &block)
@@ -20,6 +21,8 @@ module Wizport
         block.call(self) if block_given?
         @parent << '}'
       end
+
+
 
       def to_s
         @parent.join('')

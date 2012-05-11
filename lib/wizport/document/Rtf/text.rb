@@ -5,10 +5,16 @@
 
 module Wizport
   module Rtf
-    class Element
-      def initialize
+    class Text < Element
 
+      def initialize(txt)
+        @txt = txt
       end
+
+      def to_rtf
+        " #{@txt}"
+      end
+
     end
   end
 end
