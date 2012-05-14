@@ -28,7 +28,7 @@ module Wizport
       end
 
       def self.text(key,value)
-        Tag.new(@@text_styles[key][value])
+        Command.new(@@text_styles[key][value])
       end
 
       def wrap(style)

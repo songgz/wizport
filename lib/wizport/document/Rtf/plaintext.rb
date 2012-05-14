@@ -5,8 +5,17 @@
 
 module Wizport
   module Rtf
-    class Element
-      include Wizport::Visitable
+    class Plaintext < Element
+      attr_reader :txt
+
+      def initialize(txt)
+        @txt = txt
+      end
+
+      def to_rtf
+        @txt
+      end
+
     end
   end
 end

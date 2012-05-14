@@ -6,24 +6,14 @@
 
 module Wizport
   module Rtf
-    class Area < Element
+    class Group < Element
       attr_accessor :elements
-      def initialize(elements = [])
-        @elements = elements
+      def initialize()
+        @elements = []
       end
 
       def add(element)
         @elements << element
-      end
-
-      def to_rtf
-        rtf = StringIO.new
-        rtf << '{'
-        elements.each do |element|
-          rtf << element.to_rtf
-        end
-        rtf << '}'
-        rtf.string
       end
 
       def to_s

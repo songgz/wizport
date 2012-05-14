@@ -5,7 +5,8 @@
 
 module Wizport
   module Rtf
-    class Tag < Element
+    class Command < Element
+      attr_reader :ctrl
 
       def initialize(name,value = nil)
         @name = name
