@@ -14,10 +14,6 @@ module Wizport
         @ctrl = @name.to_s + @value.to_s
       end
 
-      def to_rtf
-        "\\#{@ctrl}"
-      end
-
     end
   end
 end

@@ -9,6 +9,8 @@ require "./plaintext"
 require "./command"
 require "./group"
 require "./text"
+require "./cell"
+require "./row"
 require "./table"
 require "./rtf_builder"
 require "./style"
@@ -28,9 +30,8 @@ module Wizport
         elements << Text.new(txt,styles)
       end
 
-      def table(rows)
-        elements << Table.new(rows)
-
+      def table(rows = [],&block)
+        elements << Table.new(rows, &block)
       end
 
       def colors(colours = ['ffffff'])
@@ -69,7 +70,9 @@ if __FILE__ == $0
   d = Wizport::Rtf::Document.new('c:/file.rtf') do
     text "我们", :align => :center, :font_size => 48
     text "春风不度玉门关", :align => :left, :font_size => 24
-    table [[1,1,1,1],[1,1,1,2],[1,1,1,3]]
+    table  do
+      row ['s','s','d','d']
+    end
 
   end
 

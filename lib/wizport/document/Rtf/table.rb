@@ -6,26 +6,27 @@
 module Wizport
   module Rtf
     class Table < Group
-      def initialize(rows)
+      attr_accessor :rows, :cells
+      def initialize(rows = [], &block)
         super()
+        @rows = []
+        @cells = {}
         rows.each do |r|
           row r
         end
+        block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
       end
 
       def row(r = [])
-        elements << Command.new(:trowd)
-        elements << Command.new(:trautofit1)
-        elements << Command.new(:intbl)
-        r.each_index do |i|
-          elements << Command.new(:cellx, i)
-        end
-        r.each_index do |i|
-          elements << Plaintext.new(r[i])
-          elements << Command.new(:cell)
-        end
+        @rows << Row.new(self,r)
+      end
 
-        elements << Command.new(:row)
+      def [](r,c)
+        @cells["#{r},#{c}"]
+      end
+
+      def [](r,c,v)
+        @cells["#{r},#{c}"] = v
       end
     end
   end

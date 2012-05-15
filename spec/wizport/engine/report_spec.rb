@@ -30,7 +30,7 @@ describe Wizport::Report do
     rpt.column({:title => "性别",:name => :sex})
     rpt.column({:title => "电话",:name => :tel})
     rpt.section({:title => "性别",:group => :sex})
-    rpt.save('c:/rpt.rtf')
+    rpt.save('c:/rpt.pdf')
   end
 
 end

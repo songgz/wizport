@@ -28,7 +28,6 @@ module Wizport
       visit Plaintext do |element|
         @rtf << ' '
         @rtf << element.txt
-
       end
 
       def to_rtf

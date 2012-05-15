@@ -30,7 +30,7 @@ module Wizport
     end
 
     def build(format = :pdf)
-      builder = Wizport::Builder::Rtf.new(self)
+      builder = Wizport::Builder::Pdf.new(self)
       builder.header
       if sections.size > 0
       sections.each do |section|

@@ -12,10 +12,6 @@ module Wizport
         @txt = txt
       end
 
-      def to_rtf
-        @txt
-      end
-
     end
   end
 end

@@ -12,14 +12,6 @@ module Wizport
         @elements = []
       end
 
-      def add(element)
-        @elements << element
-      end
-
-      def to_s
-
-      end
-
     end
   end
 end
