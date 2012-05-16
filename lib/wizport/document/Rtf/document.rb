@@ -13,7 +13,7 @@ require "./cell"
 require "./row"
 require "./table"
 require "./rtf_builder"
-require "./style"
+
 
 module Wizport
   module Rtf

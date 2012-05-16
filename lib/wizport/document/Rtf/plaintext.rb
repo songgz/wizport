@@ -6,7 +6,7 @@
 module Wizport
   module Rtf
     class Plaintext < Element
-      attr_reader :txt
+      attr_accessor :txt
 
       def initialize(txt)
         @txt = txt

@@ -22,7 +22,6 @@ module Wizport
       def visit_for(visitable)
         visitable.class.ancestors.each do |ancestor|
           method_name = "visit_#{ancestor.name}"
-          p method_name
           return send method_name, visitable if respond_to? method_name
         end
         raise "Can't handle #{visitable.class}"
