@@ -6,12 +6,15 @@
 module Wizport
   module Rtf
     class Command < Element
-      attr_reader :ctrl
+      attr_accessor :name,:value
 
       def initialize(name,value = nil)
         @name = name
         @value = value
-        @ctrl = @name.to_s + @value.to_s
+      end
+
+      def ctrl
+        @name.to_s + @value.to_s
       end
 
     end

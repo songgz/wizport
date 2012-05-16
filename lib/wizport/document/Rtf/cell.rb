@@ -6,17 +6,17 @@
 module Wizport
   module Rtf
     class Cell
-      def initialize(tbl,data,index)
-        @tbl = tbl
-        @data = data
+      def initialize(row,data,index)
+        @row = row
         @index = index
         @col_span = 1
         @row_span = 1
-        @tbl.elements << Plaintext.new(@data)
-      end
 
-      def render
+        @row.cellx_command Command.new(:celld)
+        @row.cellx_command Command.new(:cellx, (index+1)*1000)
 
+        @row.cellt_command @data = Plaintext.new(data)
+        @row.cellt_command Command.new(:cell)
       end
 
     end

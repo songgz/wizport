@@ -7,18 +7,20 @@ module Wizport
   module Rtf
     class Table < Group
       attr_accessor :rows, :cells
-      def initialize(rows = [], &block)
+
+      #options = {header:[],widths:[]}
+      def initialize(rows = [],options = {}, &block)
         super()
         @rows = []
         @cells = {}
-        rows.each do |r|
-          row r
+        rows.each do |cells|
+          row cells
         end
         block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
       end
 
-      def row(r = [])
-        @rows << Row.new(self,r)
+      def row(cells = [], &block)
+        @rows << Row.new(self,cells, &block)
       end
 
       def [](r,c)
