@@ -21,11 +21,20 @@ module Wizport
           @text = data
         end
 
-        @row.cellx_command Command.new(:clvmgf) if @row_span > 1
-        @row.cellx_command Command.new(:clvmrg) if row_spanned?
-        @row.cellx_command Command.new(:cellx, (@index+1)*1000)
-        @row.cellt_command Plaintext.new(@text)
-        @row.cellt_command Command.new(:cell)
+        unless col_spanned?
+        @row.table.elements << Command.new(:celld)
+        @row.table.elements << Command.new(:clvmgf) if @row_span > 1
+        @row.table.elements << Command.new(:clvmrg) if row_spanned?
+        @row.table.elements << Command.new(:cellx, (@index+@col_span)*1000)
+        @row.table.elements << Plaintext.new(@text)
+        @row.table.elements << Command.new(:cell)
+        end
+
+        #@row.cellx_command Command.new(:clvmgf) if @row_span > 1
+        #@row.cellx_command Command.new(:clvmrg) if row_spanned?
+        #@row.cellx_command Command.new(:cellx, (@index+@col_span)*1000)
+        #@row.cellt_command Plaintext.new(@text)
+        #@row.cellt_command Command.new(:cell)
       end
 
       def col_spanned?
