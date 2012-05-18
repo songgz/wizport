@@ -12,7 +12,7 @@ module Wizport
       def initialize(rows = [],options = {}, &block)
         super()
         @rows = []
-        @cells = {}
+        #@cells = {}
         rows.each do |cells|
           row cells
         end
@@ -20,16 +20,18 @@ module Wizport
       end
 
       def row(cells = [], &block)
-        @rows << Row.new(self,cells, &block)
+        r = Row.new(cells,self, &block)
+        @rows << r
+
       end
 
-      def [](r,c)
-        @cells["#{r},#{c}"]
-      end
-
-      def [](r,c,v)
-        @cells["#{r},#{c}"] = v
-      end
+      #def [](r,c)
+      #  @cells["#{r},#{c}"]
+      #end
+      #
+      #def [](r,c,v)
+      #  @cells["#{r},#{c}"] = v
+      #end
     end
   end
 end

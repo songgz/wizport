@@ -70,8 +70,8 @@ if __FILE__ == $0
   d = Wizport::Rtf::Document.new('c:/file.rtf') do
     text "我们", :align => :center, :size => 48
     text "春风不度玉门关", :align => :left, :font => 24
-    table [['s','s','d','d']]  do
-      row ['s','s','d','d']
+    table [[{text:'eee',row_span:2},'s','d','d'],[nil,'s','d','d']]  do
+      row ['f','s','d','d']
     end
 
   end
