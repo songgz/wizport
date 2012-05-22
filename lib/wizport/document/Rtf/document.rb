@@ -76,7 +76,7 @@ if __FILE__ == $0
 
   end
 
-  p d.to_rtf
+  #p d.to_rtf
 
 
 end
