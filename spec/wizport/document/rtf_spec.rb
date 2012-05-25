@@ -5,10 +5,10 @@
 
 require "../../../spec/spec_helper"
 
-describe Wizport::Document::Rtf do
+describe Wizport::Rtf::Document do
 
   it "a simple example of Rtf" do
-    rtf = Wizport::Document::Rtf.new
+    rtf = Wizport::Rtf::Document.new
     rtf.text "hello sgz"
     rtf.table [[1,1,1,""],[1,1,1,2],[1,1,1,3]]
     rtf.save('c:/r.rtf')

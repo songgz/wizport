@@ -3,6 +3,7 @@
 # Wizport: A gem for creating reports by specifying columns, groups, styles, etc.
 # Copyright 2012 by sgzhe@163.com
 
+require "stringio"
 module Wizport
   module Rtf
     class RtfBuilder
