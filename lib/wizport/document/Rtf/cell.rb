@@ -7,7 +7,8 @@ module Wizport
   module Rtf
     class Cell
       attr_accessor :col_span, :row_span
-      def initialize(data,row = nil)
+
+      def initialize(data, row = nil)
         @row = row
         @index = @row.cells.size
         @col_span = 1
@@ -22,12 +23,12 @@ module Wizport
         end
 
         unless col_spanned?
-        @row.table.elements << Command.new(:celld)
-        @row.table.elements << Command.new(:clvmgf) if @row_span > 1
-        @row.table.elements << Command.new(:clvmrg) if row_spanned?
-        @row.table.elements << Command.new(:cellx, (@index+@col_span)*1000)
-        @row.table.elements << Plaintext.new(@text)
-        @row.table.elements << Command.new(:cell)
+          @row.table.elements << Command.new(:celld)
+          @row.table.elements << Command.new(:clvmgf) if @row_span > 1
+          @row.table.elements << Command.new(:clvmrg) if row_spanned?
+          @row.table.elements << Command.new(:cellx, (@index+@col_span)*1000)
+          @row.table.elements << Plaintext.new(@text.to_s)
+          @row.table.elements << Command.new(:cell)
         end
 
         #@row.cellx_command Command.new(:clvmgf) if @row_span > 1
@@ -50,7 +51,6 @@ module Wizport
         end
         return false
       end
-
 
 
     end
