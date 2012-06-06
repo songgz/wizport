@@ -6,43 +6,36 @@
 module Wizport
   module Html
     class Table < Element
-      def initialize(html,rows = [],options = {},&block)
+      def initialize(html, rows = [], options = {}, &block)
         super html
-        @html.write '<table><tbody>'
-        rows.each do |row|
-          add_row row, :headed => options[:headed]
+        tag 'table' do
+          tag 'tbody' do
+            rows.each do |row|
+              add_row row, :headed => options[:headed]
+            end
+            block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
+          end
         end
-        block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
-        @html.write '</tbody></table>'
       end
 
-      def add_row(columns,options = {})
-        tag_name = options[:headed] ? 'thread' : 'tr'
-        @html.write '<'
-        @html.write tag_name
-        @html.write '>'
-        columns.each do |column|
-          add_cell column
+      private
+
+      def add_row(columns, options = {})
+        name = options[:headed] ? 'thread' : 'tr'
+        tag name do
+          columns.each do |column|
+            add_cell column
+          end
         end
-        @html.write '</'
-        @html.write tag_name
-        @html.write '>'
       end
 
       def add_cell(column)
+        content = column
         if column.is_a?(Hash)
-          colspan = column[:colspan]
-          rowspan = column[:rowspan]
-          column = column[:content]
-          @html.write '<td'
-          @html.write " colspan='#{colspan}'" if colspan
-          @html.write " rowspan='#{rowspan}'" if rowspan
-          @html.write '>'
+          tag 'td', column.delete(:content), column
         else
-          @html.write '<td>'
+          tag 'td', content
         end
-        @html.write column
-        @html.write '</td>'
       end
     end
   end

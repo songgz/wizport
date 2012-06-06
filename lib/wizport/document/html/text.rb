@@ -8,12 +8,8 @@ module Wizport
     class Text < Element
       def initialize(html,txt)
         super html
-        @html.write '<p>'
-        @html.write txt
-        @html.write '</p>'
+        tag 'p', txt
       end
-
-
     end
   end
 end

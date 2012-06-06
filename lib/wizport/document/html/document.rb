@@ -6,12 +6,27 @@
 require "stringio"
 module Wizport
   module Html
-    class Document
+    class Document < Element
       def initialize(&block)
         @html = StringIO.new
-        @html << "<div class='rpt'>"
-        block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
+        tag 'div', :class => 'rpt' do
+          block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
+        end
       end
+
+      def write(txt)
+        @html << txt
+      end
+
+      def to_html
+        @html.string
+      end
+
+      def save(file)
+        File.open(file, 'w') { |file| file.write(to_html) }
+      end
+
+      private
 
       def text(txt)
         Wizport::Html::Text.new(self,txt)
@@ -21,22 +36,6 @@ module Wizport
         Wizport::Html::Table.new(self, rows, &block)
       end
 
-      def write(txt)
-        @html << txt
-      end
-
-      def to_html
-        @html << '</div>'
-        @html.string
-      end
-
-      def render
-
-      end
-
-      def save(file)
-        File.open(file, 'w') { |file| file.write(to_html) }
-      end
     end
   end
 end
