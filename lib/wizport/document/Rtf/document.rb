@@ -59,16 +59,6 @@ module Wizport
 end
 
 if __FILE__ == $0
-  require "../../visitor"
-  require "./element"
-  require "./plaintext"
-  require "./command"
-  require "./group"
-  require "./text"
-  require "./cell"
-  require "./row"
-  require "./table"
-  require "./rtf_builder"
 
   d = Wizport::Rtf::Document.new('c:/file.rtf') do
     text "我们", :align => :center, :size => 48

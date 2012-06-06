@@ -8,7 +8,7 @@ module Wizport
     class Rtf
       def initialize(report)
         @rpt = report
-        @rtf = Wizport::Document::Rtf.new
+        @rtf = Wizport::Rtf::Document.new
       end
 
       def header

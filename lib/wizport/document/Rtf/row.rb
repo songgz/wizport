@@ -18,9 +18,43 @@ module Wizport
         columns.each_index do |i|
           @cellx_index = nil
           @cellt_index = nil
+          temp = 0
+          if columns[i].is_a?(Hash)
+            temp += columns[i][:colspan].to_i
+          else
+            temp += 1
+          end
+
+          if row_spanned?(temp)
+            @cells << Cell.new("",self)
+          end
           @cells << Cell.new(columns[i],self)
+          #if columns[i].is_a?(Hash)
+          #  if columns[i][:colspan] && columns[i][:colspan] > 1
+          #    (columns[i][:colspan]-1).times do
+          #      @cells << Cell.new("",self)
+          #    end
+          #  end
+          #end
         end
         @table.elements << Command.new(:row)
+      end
+
+      def row_spanned?(c_i)
+        rs = 0
+
+        (@index).times do |r|
+          t = 0
+          @table.rows[r].cells.each do |c|
+            t += c.colspan
+            if t == c_i + 1
+              rs += c.rowspan
+            end
+          end
+
+          #rs += @table.rows[r].cells[c_i].rowspan if @table.rows[r].cells[c_i] && @table.rows[r].cells[c_i].rowspan > 1
+        end
+        rs >= (@index + 1)
       end
 
       def cellx_command(cmd)

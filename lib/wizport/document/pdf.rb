@@ -16,7 +16,8 @@ module Wizport
       end
 
       def table(rows,options={}, &block)
-        @pdf.table(rows,options.merge({:width => @pdf.bounds.width}), &block)
+        tbl = PdfTable.new(rows,&block)
+        @pdf.table(tbl.rows,options.merge({:width => @pdf.bounds.width}))
       end
 
       def make_table(rows)

@@ -6,30 +6,29 @@
 module Wizport
   module Rtf
     class Cell
-      attr_accessor :col_span, :row_span
+      attr_accessor :colspan, :rowspan
 
       def initialize(data, row = nil)
         @row = row
         @index = @row.cells.size
-        @col_span = 1
-        @row_span = 1
-        @text = ""
+        @colspan = 1
+        @rowspan = 1
+        @content = data
+        #:content => "2x1", :colspan
         if data.is_a?(Hash)
-          @col_span = data[:col_span] if data[:col_span]
-          @row_span = data[:row_span] if data[:row_span]
-          @text = data[:text]
-        else
-          @text = data
+          @colspan = data[:colspan] if data[:colspan]
+          @rowspan = data[:rowspan] if data[:rowspan]
+          @content = data[:content]
         end
 
-        unless col_spanned?
+        #unless col_spanned?
           @row.table.elements << Command.new(:celld)
-          @row.table.elements << Command.new(:clvmgf) if @row_span > 1
+          @row.table.elements << Command.new(:clvmgf) if @rowspan > 1
           @row.table.elements << Command.new(:clvmrg) if row_spanned?
-          @row.table.elements << Command.new(:cellx, (@index+@col_span)*1000)
-          @row.table.elements << Plaintext.new(@text.to_s)
+          @row.table.elements << Command.new(:cellx, (col_spanned)*1000)
+          @row.table.elements << Plaintext.new(@content.to_s)
           @row.table.elements << Command.new(:cell)
-        end
+        #end
 
         #@row.cellx_command Command.new(:clvmgf) if @row_span > 1
         #@row.cellx_command Command.new(:clvmrg) if row_spanned?
@@ -39,17 +38,24 @@ module Wizport
       end
 
       def col_spanned?
-        @index.times do |c|
-          return true if @row.cells[c].col_span + c > @index
-        end
-        return false
+        col_spanned >= (@index + 1) && colspan == 1
       end
 
-      def row_spanned?
-        @row.index.times do |r|
-          return true if @row.table.rows[r].cells[@index].row_span + r > @row.index
+      def col_spanned
+        cols = 0
+        (@index).times do |c|
+          cols +=  @row.cells[c].colspan
         end
-        return false
+        cols += colspan
+      end
+
+
+      def row_spanned?
+        @row.row_spanned?(col_spanned - colspan)
+        #@row.index.times do |r|
+        #  return true if  @row.table.rows[r].cells[@index] && @row.table.rows[r].cells[@index].rowspan + r > @row.index
+        #end
+        #return false
       end
 
 

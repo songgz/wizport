@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   # specify any dependencies here; for example:
   s.add_development_dependency "rspec"
-  s.add_runtime_dependency "prawn"
+  #s.add_runtime_dependency "prawn", :git => "git://github.com/sandal/prawn.git"
   s.add_runtime_dependency "rtf"
 
 end
