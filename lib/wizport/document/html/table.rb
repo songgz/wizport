@@ -8,7 +8,8 @@ module Wizport
     class Table < Element
       def initialize(html, rows = [], options = {}, &block)
         super html
-        tag 'table',{style:'border:1px solid red;'} do
+        #{style:'border:1px solid red;'}
+        tag 'table' do
           tag 'tbody' do
             rows.each do |row|
               add_row row, :headed => options[:headed]
@@ -32,9 +33,9 @@ module Wizport
       def add_cell(column)
         content = column
         if column.is_a?(Hash)
-          tag 'td', column.delete(:content), column
+          tag 'td', column.delete(:content), column #.merge({style:'border:1px solid red;'})
         else
-          tag 'td', content
+          tag 'td', content #, {style:'border:1px solid red;'}
         end
       end
     end
