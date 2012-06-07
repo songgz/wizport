@@ -8,7 +8,7 @@ module Wizport
     class Table < Element
       def initialize(html, rows = [], options = {}, &block)
         super html
-        tag 'table' do
+        tag 'table',{style:'border:1px solid red;'} do
           tag 'tbody' do
             rows.each do |row|
               add_row row, :headed => options[:headed]

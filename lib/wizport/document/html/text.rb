@@ -6,9 +6,10 @@
 module Wizport
   module Html
     class Text < Element
-      def initialize(html,txt)
+      #options = {color:red, 'font-size':24, 'text-align' = left }
+      def initialize(html,txt,options = {})
         super html
-        tag 'p', txt
+        tag 'p', txt, {:style => options.collect {|k, v| "#{k}:#{v}"}.join(';')}.delete_if {|k,v| v == nil || v == ''}
       end
     end
   end
