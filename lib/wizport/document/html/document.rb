@@ -9,7 +9,7 @@ module Wizport
     class Document < Element
       def initialize(&block)
         @html = StringIO.new
-        tag 'div', :class => 'rpt' do
+        tag 'div', :class => 'rpt',:style => "border:1px solid red;width:96%" do
           block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
         end
       end
