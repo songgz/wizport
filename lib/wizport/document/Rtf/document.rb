@@ -3,51 +3,40 @@
 # Wizport: A gem for creating reports by specifying columns, groups, styles, etc.
 # Copyright 2012 by sgzhe@163.com
 
-
-
+require "stringio"
 module Wizport
   module Rtf
-    class Document < Group
+    class Document < Element
       def initialize(file = nil, &block)
-        super()
-        elements << Command.new(:rtf, 1)
-        elements << Command.new(:ansi)
-        elements << Command.new(:ansicpg, 2052)
-        block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
+        @rtf = StringIO.new
+        group do
+          cmd :rtf, 1
+          cmd :ansi
+          cmd :ansicpg, 2052
+          block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
+        end
         save file if file
       end
 
-      #styles = {align,font,font_size,color }
-      def text(txt, styles = {:align => :left})
-        elements << Text.new(txt,styles)
+      def write(txt)
+        @rtf << txt
       end
 
-      def table(rows = [],&block)
-        elements << Table.new(rows, &block)
+      def text(str, styles = {:align => :left})
+        Wizport::Rtf::Text.new(self, str, styles)
       end
 
-      def colors(colours = ['ffffff'])
-
-
+      def table(rows = [], &block)
+        Wizport::Rtf::Table.new(self, rows, &block)
       end
 
-      def style(txt, styles)
-
-      end
-
-
-      def method_missing(id, *args, &block)
-        cmd id, *args, &block
-      end
 
       def to_s
 
       end
 
       def to_rtf
-        builder = RtfBuilder.new
-        accept(builder)
-        builder.to_rtf
+        @rtf.string
       end
 
       def save(file)
@@ -59,18 +48,10 @@ module Wizport
 end
 
 if __FILE__ == $0
-
-  d = Wizport::Rtf::Document.new('c:/file.rtf') do
-    text "我们", :align => :center, :size => 48
-    text "春风不度玉门关", :align => :left, :font => 24
-    table [[{text:'eee',row_span:2},'s',{text:'ww',col_span:2},'d'],[nil,'s','d','d']]  do
-      row ['f','s','d','d']
-    end
-
-  end
-
-  #p d.to_rtf
-
-
+  #rtf = Wizport::Rtf::Document.new do
+  #  text "学生综合素质评价"
+  #  table [[1, {content :'1', colspan: 2}], [3, {content :'4', rowspan: 2, colspan: 2}], [1]]
+  #end
+  #rtf.save('c:/r.rtf')
 end
 
