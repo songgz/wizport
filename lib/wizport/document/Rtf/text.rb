@@ -5,35 +5,20 @@
 
 module Wizport
   module Rtf
-    class Text < Group
+    class Text < Element
       ALIGN_MAP = {left:'ql',center:'qc'}
 
-      def initialize(txt = '', styles = {})
-        super()
+      def initialize(rtf, str = '', styles = {})
+        super(rtf)
         styles = {:align => :left,:size => 24}.merge(styles)
-        elements << Command.new(:pard)
-        elements << @align = Command.new(ALIGN_MAP[styles[:align]])
-        elements << @size = Command.new(:fs,styles[:size])
-        elements << @txt = Plaintext.new(txt)
-        elements << Command.new(:par)
+        group do
+          cmd :part
+          cmd ALIGN_MAP[styles[:align]]
+          cmd :fs,styles[:size]
+          txt str
+          cmd :par
+        end
       end
-
-      def size=(value)
-        @size.value = value
-      end
-
-      def size
-        @size.value
-      end
-
-      def align=(value)
-        @align.name = ALIGN_MAP[styles[value]]
-      end
-
-      def align
-        ALIGN_MAP.invert[@align.name]
-      end
-
     end
   end
 end

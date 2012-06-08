@@ -6,7 +6,29 @@
 module Wizport
   module Rtf
     class Element
-      include Wizport::Visitable
+      def initialize(rtf)
+        @rtf = rtf
+      end
+
+      def cmd(name, value = nil)
+        @rtf.write '\\'
+        @rtf.write name
+        @rtf.write value if value
+      end
+
+      def txt(str)
+        str = str.to_s
+        str = str.gsub("{", "\\{").gsub("}", "\\}").gsub("\\", "\\\\")
+        str = str.encode("UTF-16LE", :undef=>:replace).each_codepoint.map {|n| n < 128 ? n.chr : "\\u#{n}\\'3f"}.join('')
+        @rtf.write ' '
+        @rtf.write str
+      end
+
+      def group
+        @rtf.write '{'
+        yield if block_given?
+        @rtf.write '}'
+      end
     end
   end
 end
