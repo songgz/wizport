@@ -29,7 +29,7 @@ module Wizport
 
       private
 
-      def text(txt,options)
+      def text(txt,options = {})
         Wizport::Html::Text.new(self,txt,options)
       end
 
