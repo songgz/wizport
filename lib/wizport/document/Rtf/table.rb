@@ -24,15 +24,9 @@ module Wizport
         @col_offset = 1
         @right_width = 0
         cells.each do |cell|
-          if row_spanned? @col_offset
-            add_cell ""
-            add_cell cell
-          elsif row_spanned? @col_offset + 1
-            add_cell cell
-            add_cell ""
-          else
-            add_cell cell
-          end
+          add_cell "" if row_spanned?(@col_offset)
+          add_cell cell
+          add_cell "" if row_spanned? @col_offset
         end
         cmd :row
       end
@@ -56,13 +50,13 @@ module Wizport
           @row_spans[@col_offset][:rowspan] -= 1
           colspan = @row_spans[@col_offset][:colspan]
         end
-        colspan.times do |i|
-          @right_width += column_width(@col_offset + i)
+        colspan.times do
+          @right_width += column_width(@col_offset)
+          @col_offset += 1
         end
         cmd :cellx, @right_width
         txt content
         cmd :cell
-        @col_offset += colspan
       end
 
       def row_spanned?(offset)
