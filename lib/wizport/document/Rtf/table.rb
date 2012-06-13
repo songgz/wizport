@@ -10,6 +10,7 @@ module Wizport
       def initialize(rtf, rows = [], options = {}, &block)
         super(rtf)
         @row_spans = {}
+        @column_widths = options[:column_widths] || 800
         rows.each_index do |index|
           add_row rows[index]
         end
@@ -21,6 +22,7 @@ module Wizport
         cmd :trautofit1
         cmd :intbl
         @col_offset = 1
+        @right_width = 0
         cells.each do |cell|
           if row_spanned? @col_offset
             add_cell ""
@@ -49,17 +51,18 @@ module Wizport
         cmd :celld
         if rowspan > 1
           cmd :clvmgf
-          @col_offset += colspan
         elsif row_spanned? @col_offset
           cmd :clvmrg
           @row_spans[@col_offset][:rowspan] -= 1
-          @col_offset += row_spans_with_colspan
-        else
-          @col_offset += colspan
+          colspan = @row_spans[@col_offset][:colspan]
         end
-        cmd :cellx, (@col_offset - 1)* 2000
+        colspan.times do |i|
+          @right_width += column_width(@col_offset + i)
+        end
+        cmd :cellx, @right_width
         txt content
         cmd :cell
+        @col_offset += colspan
       end
 
       def row_spanned?(offset)
@@ -68,6 +71,11 @@ module Wizport
 
       def row_spans_with_colspan
         return @row_spans[@col_offset][:colspan] || 1
+      end
+
+      def column_width(offset)
+        return @column_widths[offset] || 800 if @column_widths.is_a?(Hash)
+        @column_widths
       end
 
     end

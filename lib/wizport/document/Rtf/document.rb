@@ -26,8 +26,8 @@ module Wizport
         Wizport::Rtf::Text.new(self, str, styles)
       end
 
-      def table(rows = [], &block)
-        Wizport::Rtf::Table.new(self, rows, &block)
+      def table(rows = [],options = {}, &block)
+        Wizport::Rtf::Table.new(self, rows, options, &block)
       end
 
 
