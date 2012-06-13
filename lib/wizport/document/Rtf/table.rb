@@ -48,7 +48,7 @@ module Wizport
         elsif row_spanned? @col_offset
           cmd :clvmrg
           @row_spans[@col_offset][:rowspan] -= 1
-          colspan = @row_spans[@col_offset][:colspan]
+          colspan = @row_spans[@col_offset][:colspan] || colspan
         end
         colspan.times do
           @right_width += column_width(@col_offset)
