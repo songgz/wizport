@@ -24,14 +24,16 @@ module Wizport
         @col_offset = 1
         @right_width = 0
         cells.each do |cell|
-          add_cell "" if row_spanned?(@col_offset)
+
           add_cell cell
-          add_cell "" if row_spanned? @col_offset
+
         end
         cmd :row
       end
 
-      def add_cell(cell)
+      def add_cell(cell,merge = false)
+        p row_spanned?(@col_offset)
+        add_cell "",true if !merge && row_spanned?(@col_offset)
         if cell.is_a?(Hash)
           rowspan = cell[:rowspan]
           colspan = cell[:colspan]
@@ -41,15 +43,19 @@ module Wizport
         colspan = colspan || 1
         rowspan = rowspan || 1
         content = content || cell
-
+        p @row_spans
         cmd :celld
         if rowspan > 1
           cmd :clvmgf
         elsif row_spanned? @col_offset
           cmd :clvmrg
           @row_spans[@col_offset][:rowspan] -= 1
+          #if @row_spans[@col_offset][:rowspan] < 2
+          #    @row_spans[@col_offset].delete(:rowspan)
+          #end
           colspan = @row_spans[@col_offset][:colspan] || colspan
         end
+        p @row_spans
         colspan.times do
           @right_width += column_width(@col_offset)
           @col_offset += 1
@@ -57,6 +63,8 @@ module Wizport
         cmd :cellx, @right_width
         txt content
         cmd :cell
+
+        add_cell "",true if  row_spanned?(@col_offset)
       end
 
       def row_spanned?(offset)
