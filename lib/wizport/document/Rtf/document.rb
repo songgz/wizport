@@ -30,6 +30,14 @@ module Wizport
         Wizport::Rtf::Table.new(self, rows, options, &block)
       end
 
+      def line_break
+        cmd :par
+      end
+
+      def page_break
+        cmd :page
+      end
+
 
       def to_s
 

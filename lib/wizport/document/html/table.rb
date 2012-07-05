@@ -6,8 +6,10 @@
 module Wizport
   module Html
     class Table < Element
+      DEFAULT_COLUMN_WIDTH = 40
       def initialize(html, rows = [], options = {}, &block)
         super html
+        @column_widths = options[:column_widths]
         #{style:'border:1px solid red;'}
         tag 'table' do
           tag 'tbody' do
