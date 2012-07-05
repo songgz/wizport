@@ -6,15 +6,16 @@
 module Wizport
   module Rtf
     class Text < Element
-      ALIGN_MAP = {left:'ql',center:'qc'}
+      ALIGN_MAP = {left:'ql',center:'qc',right:'qr'}
+      FONT_MAP = {'font-size' => :fs}
 
       def initialize(rtf, str = '', styles = {})
         super(rtf)
-        styles = {:align => :left,:size => 24}.merge(styles)
+        styles = {:align => :left,'font-size' => 24}.merge(styles)
         group do
-          cmd :part
+          cmd :pard
           cmd ALIGN_MAP[styles[:align]]
-          cmd :fs,styles[:size]
+          cmd FONT_MAP[styles['font-size']]
           txt str
           cmd :par
         end

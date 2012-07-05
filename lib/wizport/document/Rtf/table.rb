@@ -6,11 +6,12 @@
 module Wizport
   module Rtf
     class Table < Element
+      DEFAULT_COLUMN_WIDTH = 40
 
       def initialize(rtf, rows = [], options = {}, &block)
         super(rtf)
         @row_spans = {}
-        @column_widths = options[:column_widths] || 800
+        @column_widths = options[:column_widths] || DEFAULT_COLUMN_WIDTH
         rows.each_index do |index|
           add_row rows[index]
         end
@@ -24,15 +25,12 @@ module Wizport
         @col_offset = 1
         @right_width = 0
         cells.each do |cell|
-
           add_cell cell
-
         end
         cmd :row
       end
 
       def add_cell(cell,merge = false)
-        p row_spanned?(@col_offset)
         add_cell "",true if !merge && row_spanned?(@col_offset)
         if cell.is_a?(Hash)
           rowspan = cell[:rowspan]
@@ -43,23 +41,22 @@ module Wizport
         colspan = colspan || 1
         rowspan = rowspan || 1
         content = content || cell
-        p @row_spans
-        cmd :celld
+
         if rowspan > 1
-          cmd :clvmgf
+          v_merge = :gf
         elsif row_spanned? @col_offset
-          cmd :clvmrg
+          v_merge = :rg
           @row_spans[@col_offset][:rowspan] -= 1
-          #if @row_spans[@col_offset][:rowspan] < 2
-          #    @row_spans[@col_offset].delete(:rowspan)
-          #end
           colspan = @row_spans[@col_offset][:colspan] || colspan
         end
-        p @row_spans
         colspan.times do
           @right_width += column_width(@col_offset)
           @col_offset += 1
         end
+
+        cmd :celld
+        cmd :clvmgf if v_merge == :gf
+        cmd :clvmrg if v_merge == :rg
         cmd :cellx, @right_width
         txt content
         cmd :cell
@@ -71,13 +68,9 @@ module Wizport
         @row_spans[offset] && @row_spans[offset][:rowspan].to_i > 1
       end
 
-      def row_spans_with_colspan
-        return @row_spans[@col_offset][:colspan] || 1
-      end
-
       def column_width(offset)
-        return @column_widths[offset] || 800 if @column_widths.is_a?(Hash)
-        @column_widths
+        return 20 * (@column_widths[offset] || DEFAULT_COLUMN_WIDTH) if @column_widths.is_a?(Hash)
+        @column_widths * 20
       end
 
     end
