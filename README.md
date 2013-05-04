@@ -48,7 +48,7 @@ Or install it yourself as:
       end
  end
  rtf.save('c:/r.rtf')
- ```ruby
+ ```
 
 ## Contributing
 
