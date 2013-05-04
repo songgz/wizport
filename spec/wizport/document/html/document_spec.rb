@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require "../../../../spec/spec_helper"
+require "spec_helper"
 
 describe Wizport::Html::Document do
 

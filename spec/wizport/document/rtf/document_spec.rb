@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-require "../../../../spec/spec_helper"
+require "spec_helper"
 
 describe Wizport::Rtf::Document do
 
@@ -10,8 +10,7 @@ describe Wizport::Rtf::Document do
         page_break
         text "ss"
         table [[{content:'e',rowspan:4},{content:'4',rowspan:4},1,{content:'1',colspan:2}],
-               [{content:'4',rowspan:3,colspan:2},8],
-               [11]],column_widths:{1=>100,2 => 100,3 => 50,4 => 50,5 => 50} do
+               [{content:'4',rowspan:3,colspan:2},8],[11]], column_widths:{1=>100,2 => 100,3 => 50,4 => 50,5 => 50} do
           add_row [1]
         end
 

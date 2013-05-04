@@ -5,7 +5,7 @@
 
 module Wizport
   class Column
-    TYPE = {default:0,image:1}
+    TYPE = {default:0, image:1}
     ALIGN = {}
 
     attr_accessor :title, :name, :width, :clazz

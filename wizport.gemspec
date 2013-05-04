@@ -1,26 +1,28 @@
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
+# coding: utf-8
+lib = File.expand_path('../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "wizport/version"
 
-Gem::Specification.new do |s|
-  s.name        = "wizport"
-  s.version     = Wizport::VERSION
-  s.authors     = ["songgz"]
-  s.email       = ["sgzhe@163.com"]
-  s.homepage    = ""
-  s.summary     = "A simple, extensible reporting system"
-  s.description = "A simple, extensible reporting system"
+Gem::Specification.new do |spec|
+  spec.name          = "wizport"
+  spec.version       = Wizport::VERSION
+  spec.authors       = ["songgz"]
+  spec.email         = ["sgzhe@163.com"]
+  spec.description   = "A simple, extensible reporting system"
+  spec.summary       = "A simple, extensible reporting system"
+  spec.homepage      = "https://github.com/songgz/wizport/wiki"
+  spec.license       = "MIT"
 
-  s.rubyforge_project = "wizport"
+  spec.files         = `git ls-files`.split($/)
+  spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
+  spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
+  spec.require_paths = ["lib"]
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
 
-  # specify any dependencies here; for example:
-  s.add_development_dependency "rspec"
-  #s.add_runtime_dependency "prawn", :git => "git://github.com/sandal/prawn.git"
-  s.add_runtime_dependency "rtf"
+  #spec.add_runtime_dependency "prawn" , :git => 'git://github.com/sandal/prawn.git'
+  #spec.add_runtime_dependency "rtf"
 
 end
