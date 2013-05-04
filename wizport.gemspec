@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["songgz"]
   spec.email         = ["sgzhe@163.com"]
   spec.description   = "A simple, extensible reporting system"
-  spec.summary       = "A simple, extensible reporting system"
+  spec.summary       = "Wizport Abstract Interface. Creates text, html, pdf and rtf output, based on a common framework."
   spec.homepage      = "https://github.com/songgz/wizport/wiki"
   spec.license       = "MIT"
 
