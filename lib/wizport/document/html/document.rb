@@ -19,12 +19,12 @@ module Wizport
         @html << txt
       end
 
-      def to_html
+      def to_doc
         @html.string
       end
 
       def save(file)
-        File.open(file, 'w') { |file| file.write(to_html) }
+        File.open(file, 'w') { |file| file.write(to_doc) }
       end
 
       private

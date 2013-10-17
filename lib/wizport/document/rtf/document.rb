@@ -43,12 +43,12 @@ module Wizport
 
       end
 
-      def to_rtf
+      def to_doc
         @rtf.string
       end
 
       def save(file)
-        File.open(file, 'w') { |file| file.write(to_rtf) }
+        File.open(file, 'w') { |file| file.write(to_doc) }
       end
 
     end
