@@ -12,7 +12,7 @@ describe Wizport::Html::Document do
      end
     end
 
-    p html.to_html
+    p html.to_doc
     html.save('c:\h.html')
 
 

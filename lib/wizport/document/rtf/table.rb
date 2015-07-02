@@ -20,6 +20,19 @@ module Wizport
 
       def add_row(cells = [])
         cmd :trowd
+        cmd :trbrdrt
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :trbrdrl
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :trbrdrb
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :trbrdrr
+        cmd :brdrs
+        cmd :brdrw10
+
         cmd :trautofit1
         cmd :intbl
         @col_offset = 1
@@ -55,6 +68,20 @@ module Wizport
         end
 
         cmd :celld
+
+        cmd :clbrdrt
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :clbrdrl
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :clbrdrb
+        cmd :brdrs
+        cmd :brdrw10
+        cmd :clbrdrr
+        cmd :brdrs
+        cmd :brdrw10
+
         cmd :clvmgf if v_merge == :gf
         cmd :clvmrg if v_merge == :rg
         cmd :cellx, @right_width

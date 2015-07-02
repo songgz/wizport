@@ -8,11 +8,36 @@ module Wizport
   module Rtf
     class Document < Element
       def initialize(file = nil, &block)
-        @rtf = StringIO.new
+        super
         group do
           cmd :rtf, 1
           cmd :ansi
           cmd :ansicpg, 2052
+          cmd :deff, 0
+          group do
+            cmd :fonttbl
+            group do
+              delimit do
+                cmd :f, 0
+                cmd :fcharset, 0
+                write " Courier"
+              end
+            end
+          end
+          group do
+            cmd :colortbl
+            delimit
+            delimit do
+              cmd :red, 0
+              cmd :green, 0
+              cmd :blue, 0
+            end
+            delimit do
+              cmd :red, 255
+              cmd :green, 0
+              cmd :blue,0
+            end
+          end
           block.arity<1 ? self.instance_eval(&block) : block.call(self) if block_given?
         end
         save file if file
@@ -26,14 +51,20 @@ module Wizport
         Wizport::Rtf::Text.new(self, str, styles)
       end
 
+      #creates a new table.
       def table(rows = [],options = {}, &block)
         Wizport::Rtf::Table.new(self, rows, options, &block)
+      end
+
+      def image
+
       end
 
       def line_break
         cmd :par
       end
 
+      #writes a page interruption (new page)
       def page_break
         cmd :page
       end
@@ -54,12 +85,3 @@ module Wizport
     end
   end
 end
-
-if __FILE__ == $0
-  #rtf = Wizport::Rtf::Document.new do
-  #  text "学生综合素质评价"
-  #  table [[1, {content :'1', colspan: 2}], [3, {content :'4', rowspan: 2, colspan: 2}], [1]]
-  #end
-  #rtf.save('c:/r.rtf')
-end
-

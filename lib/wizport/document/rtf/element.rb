@@ -6,8 +6,8 @@
 module Wizport
   module Rtf
     class Element
-      def initialize(rtf)
-        @rtf = rtf
+      def initialize(rtf = nil)
+        @rtf = rtf || StringIO.new
       end
 
       def cmd(name, value = nil)
@@ -28,6 +28,11 @@ module Wizport
         @rtf.write '{'
         yield if block_given?
         @rtf.write '}'
+      end
+
+      def delimit
+        yield if block_given?
+        @rtf.write ';'
       end
     end
   end
