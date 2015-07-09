@@ -10,6 +10,10 @@ module Wizport
         @rtf = rtf || StringIO.new
       end
 
+      def write(txt)
+        @rtf.write txt
+      end
+
       def cmd(name, value = nil)
         @rtf.write '\\'
         @rtf.write name

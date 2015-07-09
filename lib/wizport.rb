@@ -14,9 +14,9 @@ require "wizport/visitor"
 require "wizport/document/rtf/element"
 require "wizport/document/rtf/text"
 require "wizport/document/rtf/table"
+require "wizport/document/rtf/image"
 require "wizport/document/rtf/document"
 require "wizport/document/rtf"
-
 
 require "wizport/document/pdf/element"
 require "wizport/document/pdf/catalog"
@@ -25,7 +25,6 @@ require "wizport/document/pdf/page"
 require "wizport/document/pdf/document"
 require "wizport/document/pdf/x_ref_tbl"
 require "wizport/document/pdf/pdf_builder"
-
 
 require "wizport/builder/pdf"
 require "wizport/builder/rtf"

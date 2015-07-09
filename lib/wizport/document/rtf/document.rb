@@ -43,10 +43,6 @@ module Wizport
         save file if file
       end
 
-      def write(txt)
-        @rtf << txt
-      end
-
       def text(str, styles = {:align => :left})
         Wizport::Rtf::Text.new(self, str, styles)
       end
@@ -56,8 +52,8 @@ module Wizport
         Wizport::Rtf::Table.new(self, rows, options, &block)
       end
 
-      def image
-
+      def image(file)
+        Wizport::Rtf::Image.new(self, file)
       end
 
       def line_break

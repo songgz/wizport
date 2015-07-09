@@ -7,12 +7,18 @@ describe Wizport::Rtf::Document do
   it "a simple example of Rtf" do
       rtf = Wizport::Rtf::Document.new do
         text "学生综合素质评价", :align => :center, 'font-size' => 48
+        image('h:\f.gif')
+        image('h:\ua.bmp')
+        image('h:\eahey.jpg')
+        image('h:\eahey.png')
         page_break
         text "ss"
         table [[{content:'e',rowspan:4},{content:'4',rowspan:4},1,{content:'1',colspan:2}],
                [{content:'4',rowspan:3,colspan:2},8],[11]], column_widths:{1=>100,2 => 100,3 => 50,4 => 50,5 => 50} do
           add_row [1]
         end
+
+
 
         #table [["姓名", "person.name", "性别", {content: "{Core::Person::GENDER_TYPE[person.gender]}", colspan: 3}, "出生日期", {content: "nil}", colspan: 2}, {content: "一寸照片", colspan: 2, rowspan: 3}],
         #      ["民族", {content: "{Core}", colspan: 2}, "入队(团)时间", {content: '', colspan: 5}],
